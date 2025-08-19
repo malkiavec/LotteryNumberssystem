@@ -53,7 +53,7 @@ def extract_digit_transitions(draws: List[Tuple[int, ...]], lag: int) -> Counter
         a, b = draws[i], draws[i+lag]
         pairs = greedy_multiset_mapping(a, b)
         for x, y in pairs:
-            trans[(x, y)] += 1
+            trans[(x, y)] += 2
     return trans
 
 def normalize_matrix(cnt: Counter) -> Dict[Tuple[int, int], float]:
@@ -126,7 +126,7 @@ if all_labels:
     combined_draws = [d for lbl in selected_labels for d in draws_by_label[lbl]]
 
     all_trans = Counter()
-    for lag in range(1, max_lag+1):
+    for lag in range(1, max_lag+2):
         trans = extract_digit_transitions(combined_draws[-recent_window:], lag)
         all_trans.update(trans)
     probs = normalize_matrix(all_trans)
